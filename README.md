@@ -7,6 +7,28 @@ Section:NewButton("Copy CFrame", "Check", function() -- Buttton
     setclipboard(tostring(game.Players.LocalPlayer.Character.HumanoidRootPart.Position))
 end)
 
+Section:NewButton("Fill Bench", "Check", function() -- Buttton
+    for key, v in pairs(workspace:WaitForChild("Items"):GetChildren()) do
+        if v.Name == "Log" 
+        or v.Name == "Coal" 
+        or v.Name == "Broken Fan" 
+        or v.Name == "Tyre" 
+        or v.Name == "Broken Microwave" 
+        or v.Name == "Bolt" 
+        or v.Name == "Old Radio" then
+            game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("RequestStartDraggingItem"):FireServer(v)
+            if v:FindFirstChild("Main") then
+                v.Main.CFrame = CFrame.new(20, 15, -5)
+            end
+        elseif v.Name == "Basic Egg" then
+            game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("RequestStartDraggingItem"):FireServer(v)
+            if v:FindFirstChild("Main") then
+                v.Main.CFrame = CFrame.new(1, 15, 74)
+            end
+        end
+    end
+end)
+
 Section:NewButton("Fill Fuel", "Check", function() -- Buttton
     for key, v in pairs(workspace:WaitForChild("Items"):GetChildren()) do
         if v.Name == "Log" 
