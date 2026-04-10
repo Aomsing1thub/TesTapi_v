@@ -11,10 +11,10 @@ Section:NewButton("Fill Bench", "Check", function() -- Buttton
     for key, v in pairs(workspace:WaitForChild("Items"):GetChildren()) do
         if v.Name == "Log" 
         or v.Name == "Coal" 
-        or v.Name == "Broken Fan" 
+        or string.find(v.Name,"Broken")
         or v.Name == "Tyre" 
-        or v.Name == "Broken Microwave" 
         or v.Name == "Bolt" 
+        or v.Name == "Cultist Gem" 
         or v.Name == "Old Radio" then
             game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("RequestStartDraggingItem"):FireServer(v)
             if v:FindFirstChild("Main") then
@@ -36,7 +36,7 @@ Section:NewButton("Fill Fuel", "Check", function() -- Buttton
             if v:FindFirstChild("Coal") then
                 v.Coal.CFrame = CFrame.new(0, 15, 0)
             end
-        elseif v.Name == "Fuel Canister" or v.Name == "Oil Barrel" or v.Name == "Morsel" then
+        elseif v.Name == "Fuel Canister" or v.Name == "Oil Barrel" or v.Name == "Morsel" or v.Name == "Fuel Canister" then
             game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("RequestStartDraggingItem"):FireServer(v)
             if v:FindFirstChild("Main") then
                 v.Main.CFrame = CFrame.new(0, 15, 0)
@@ -46,6 +46,18 @@ Section:NewButton("Fill Fuel", "Check", function() -- Buttton
             if v:FindFirstChild("Main") then
                 v.Main.CFrame = CFrame.new(1, 15, 74)
             end
+        end
+    end
+end)
+
+Section:NewButton("Bring Food", "Check", function() -- Buttton
+    for key, v in pairs(workspace:WaitForChild("Items"):GetChildren()) do
+        if v.Name == "Carrot" or v.Name == "Berry" then
+            game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("RequestStartDraggingItem"):FireServer(v)
+            if v:FindFirstChild("Main") then
+                v.Main.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,-5)
+            end
+            game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("StopDraggingItem"):FireServer(v)
         end
     end
 end)
@@ -152,6 +164,14 @@ end)
 Section:NewToggle("Auto Cut tree", "ToggleInfo", function(state)
     a2 = state
     if not a2 then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 5, 10)
+    end
+end)
+
+Section:NewToggle("Auto Help Kid", "ToggleInfo", function(state)
+    a2 = state
+    if not a2 then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 5, 10)
     end
 end)
 
@@ -198,20 +218,98 @@ pcall(function()
 
     for key, v in pairs(workspace.Map.Foliage:GetChildren()) do
         if v.Name == "Small Tree" and a2 then
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Trunk.CFrame * CFrame.new(0,10,0)
-            wait(.1)
-            local args = {
-                v,
-                Mytool,
-                "27_2777604486",
-                CFrame.new(-52.84754943847656, 3.8810336589813232, 36.91767501831055, -0.4882603883743286, 8.754180491621355e-09, 0.8726980090141296, -3.554958993845503e-08, 1, -2.99205886733489e-08, -0.8726980090141296, -4.5633093748165265e-08, -0.4882603883743286)
-            }
-            game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("ToolDamageObject"):InvokeServer(unpack(args))
+            if v:FindFirstChild("Trunk") then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Trunk.CFrame * CFrame.new(0,10,0)
+                wait(.1)
+                local args = {
+                    v,
+                    Mytool,
+                    "27_2777604486",
+                    CFrame.new(-52.84754943847656, 3.8810336589813232, 36.91767501831055, -0.4882603883743286, 8.754180491621355e-09, 0.8726980090141296, -3.554958993845503e-08, 1, -2.99205886733489e-08, -0.8726980090141296, -4.5633093748165265e-08, -0.4882603883743286)
+                }
+                game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("ToolDamageObject"):InvokeServer(unpack(args))
+            end
         end
     end
 end)
 end
 end
+end)
+
+spawn(function()
+while wait() do
+if a3 then
+pcall(function()
+	if workspace.Characters["Lost Child"].Head:FindFirstChild("ProximityAttachment") then
+        gg = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Map.Landmarks["Jail Cellar"].Bed.BedMain.CFrame
+        wait(.5)
+        fireproximityprompt(workspace.Characters["Lost Child2"].Head.ProximityAttachment.ProximityInteraction)
+        wait()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = gg
+    end
+	if workspace.Characters["Lost Child2"].Head:FindFirstChild("ProximityAttachment") then
+        gg = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Map.Landmarks["Jail Cellar2"].Bed.BedMain.CFrame
+        wait(.5)
+        fireproximityprompt(workspace.Characters["Lost Child2"].Head.ProximityAttachment.ProximityInteraction)
+        wait()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = gg
+    end
+	if workspace.Characters["Lost Child3"].Head:FindFirstChild("ProximityAttachment") then
+        gg = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Map.Landmarks["Jail Cellar3"].Bed.BedMain.CFrame
+        wait(.5)
+        fireproximityprompt(workspace.Characters["Lost Child3"].Head.ProximityAttachment.ProximityInteraction)
+        wait()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = gg
+    end
+	if workspace.Characters["Lost Child4"].Head:FindFirstChild("ProximityAttachment") then
+        gg = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Map.Landmarks["Jail Cellar4"].Bed.BedMain.CFrame
+        wait(.5)
+        fireproximityprompt(workspace.Characters["Lost Child4"].Head.ProximityAttachment.ProximityInteraction)
+        wait()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = gg
+    end
+end)
+end
+end
+end)
+
+Section:NewKeybind("Help kid", "KeybindInfo", Enum.KeyCode.Z, function() -- Key OPEN/CLOSE
+	if workspace.Characters["Lost Child"].Head:FindFirstChild("ProximityAttachment") then
+        gg = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Map.Landmarks["Jail Cellar"].Bed.BedMain.CFrame
+        wait(.5)
+        fireproximityprompt(workspace.Characters["Lost Child2"].Head.ProximityAttachment.ProximityInteraction)
+        wait()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = gg
+    end
+	if workspace.Characters["Lost Child2"].Head:FindFirstChild("ProximityAttachment") then
+        gg = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Map.Landmarks["Jail Cellar2"].Bed.BedMain.CFrame
+        wait(.5)
+        fireproximityprompt(workspace.Characters["Lost Child2"].Head.ProximityAttachment.ProximityInteraction)
+        wait()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = gg
+    end
+	if workspace.Characters["Lost Child3"].Head:FindFirstChild("ProximityAttachment") then
+        gg = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Map.Landmarks["Jail Cellar3"].Bed.BedMain.CFrame
+        wait(.5)
+        fireproximityprompt(workspace.Characters["Lost Child3"].Head.ProximityAttachment.ProximityInteraction)
+        wait()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = gg
+    end
+	if workspace.Characters["Lost Child4"].Head:FindFirstChild("ProximityAttachment") then
+        gg = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Map.Landmarks["Jail Cellar4"].Bed.BedMain.CFrame
+        wait(.5)
+        fireproximityprompt(workspace.Characters["Lost Child4"].Head.ProximityAttachment.ProximityInteraction)
+        wait()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = gg
+    end
 end)
 
 Section:NewKeybind("Go to Camp Fire", "KeybindInfo", Enum.KeyCode.Z, function() -- Key OPEN/CLOSE
@@ -224,5 +322,5 @@ end)
 
 
 
-
+workspace.Characters["Lost Child2"].HumanoidRootPart.CFrame = CFrame.new(0, 5, 10)
 --
