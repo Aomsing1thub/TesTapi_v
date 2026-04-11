@@ -736,9 +736,7 @@ Mydata = {}
 
 for i,v in pairs (game:GetService("Players").LocalPlayer.PlayerGui.Tranformar.Characters:GetChildren()) do
 	if v:IsA("ImageLabel") then
-		-- print(v)
 		table.insert(dataname,v.Name)
-		-- game:GetService("ReplicatedStorage"):WaitForChild("SkillEvent"):FireServer(v.Name)
 	end
 end
 
@@ -748,6 +746,63 @@ for key, v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.Tranformar.
             table.insert(Mydata,v.Name)
         end
     end
+end
+
+local playerGui = game:GetService("Players").LocalPlayer.PlayerGui
+local transformCharacters = playerGui.Tranformar.Characters
+local powersFrame = playerGui.Botoes.Poderes
+
+local function fireTransformButton(characterName)
+    local characterFrame = transformCharacters:FindFirstChild(characterName)
+    if characterFrame and characterFrame:FindFirstChild("Transform") then
+        firesignal(characterFrame.Transform.MouseButton1Click)
+        return true
+    end
+
+    return false
+end
+
+local function destroyCopiedPowerButtons()
+    local copiedButtonOne = powersFrame:FindFirstChild("2_1")
+    if copiedButtonOne then
+        copiedButtonOne:Destroy()
+    end
+
+    local copiedButtonTwo = powersFrame:FindFirstChild("2_2")
+    if copiedButtonTwo then
+        copiedButtonTwo:Destroy()
+    end
+end
+
+local function clonePowerButton(sourceNames, cloneName, labelText)
+    local sourceButton
+
+    if type(sourceNames) == "table" then
+        for _, sourceName in ipairs(sourceNames) do
+            sourceButton = powersFrame:FindFirstChild(sourceName)
+            if sourceButton then
+                break
+            end
+        end
+    else
+        sourceButton = powersFrame:FindFirstChild(sourceNames)
+    end
+
+    if not sourceButton then
+        return nil
+    end
+
+    local clonedButton = sourceButton:Clone()
+    clonedButton.Parent = sourceButton.Parent
+    clonedButton.Name = cloneName
+    clonedButton.Position = sourceButton.Position - UDim2.new(0.731, 0, 0, 0)
+
+    local textLabel = clonedButton:FindFirstChild("TextLabel")
+    if textLabel and textLabel:IsA("TextLabel") then
+        textLabel.Text = labelText
+    end
+
+    return clonedButton
 end
 
 Section:NewDropdown("Characters", dataname, function(currentOption)
@@ -772,7 +827,28 @@ Section:NewToggle("Toggle", false, function(state)
 end)
 
 Section:NewMultiDropdown("Characters Multi", Mydata, function(selectedOptions)
-    game:GetService("Players").LocalPlayer.PlayerGui.Botoes.Direita.Visible = false
+    playerGui.Botoes.Direita.Visible = false
+
+    destroyCopiedPowerButtons()
+
+    local primaryCharacter = selectedOptions[1]
+    local secondaryCharacter = selectedOptions[2]
+
+    if primaryCharacter then
+        fireTransformButton(primaryCharacter)
+    end
+
+    if secondaryCharacter and fireTransformButton(secondaryCharacter) then
+        task.wait()
+        clonePowerButton({ "TrolarBotão", "TrolarBotao", "TrolarBotรฃo" }, "2_1", secondaryCharacter)
+        clonePowerButton("TrolarBotao2", "2_2", secondaryCharacter .. " 2")
+
+        if primaryCharacter then
+            task.wait()
+            fireTransformButton(primaryCharacter)
+        end
+    end
+
     if #selectedOptions == 1 then
         if game:GetService("Players").LocalPlayer.PlayerGui.Botoes.Poderes:FindFirstChild("2_1") then
             game:GetService("Players").LocalPlayer.PlayerGui.Botoes.Poderes:FindFirstChild("2_1"):Destroy()
