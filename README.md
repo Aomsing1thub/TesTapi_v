@@ -574,6 +574,158 @@ function Section:NewDropdown(name, options, callback)
     return card
 end
 
+function Section:NewMultiDropdown(name, options, callback)
+    local dropdownOpen = false
+    local selectedLookup = {}
+    local selectedOptions = {}
+
+    local card = createCardBase(
+        "Frame",
+        (name:gsub("%s+", "") .. "MultiDropdownCard"),
+        name,
+        "Select multiple options from this list.",
+        84,
+        self:_nextOrder()
+    )
+    card.ClipsDescendants = true
+
+    local dropdownButton = Instance.new("TextButton")
+    dropdownButton.Name = "MultiDropdownButton"
+    dropdownButton.Size = UDim2.new(1, -28, 0, 30)
+    dropdownButton.Position = UDim2.new(0, 14, 0, 46)
+    dropdownButton.BackgroundColor3 = Color3.fromRGB(39, 43, 54)
+    dropdownButton.BorderSizePixel = 0
+    dropdownButton.Font = Enum.Font.Gotham
+    dropdownButton.Text = ""
+    dropdownButton.AutoButtonColor = false
+    dropdownButton.ZIndex = 4
+    dropdownButton.Parent = card
+
+    local dropdownCorner = Instance.new("UICorner")
+    dropdownCorner.CornerRadius = UDim.new(0, 10)
+    dropdownCorner.Parent = dropdownButton
+
+    local dropdownText = Instance.new("TextLabel")
+    dropdownText.Name = "MultiDropdownText"
+    dropdownText.Size = UDim2.new(1, -40, 1, 0)
+    dropdownText.Position = UDim2.new(0, 12, 0, 0)
+    dropdownText.BackgroundTransparency = 1
+    dropdownText.Font = Enum.Font.Gotham
+    dropdownText.TextColor3 = Color3.fromRGB(235, 239, 245)
+    dropdownText.TextSize = 12
+    dropdownText.TextXAlignment = Enum.TextXAlignment.Left
+    dropdownText.ZIndex = 5
+    dropdownText.Parent = dropdownButton
+
+    local dropdownArrow = Instance.new("TextLabel")
+    dropdownArrow.Name = "MultiDropdownArrow"
+    dropdownArrow.Size = UDim2.new(0, 22, 1, 0)
+    dropdownArrow.Position = UDim2.new(1, -26, 0, 0)
+    dropdownArrow.BackgroundTransparency = 1
+    dropdownArrow.Font = Enum.Font.GothamBold
+    dropdownArrow.TextColor3 = Color3.fromRGB(161, 195, 255)
+    dropdownArrow.TextSize = 14
+    dropdownArrow.ZIndex = 5
+    dropdownArrow.Parent = dropdownButton
+
+    local dropdownList = Instance.new("Frame")
+    dropdownList.Name = "MultiDropdownList"
+    dropdownList.Size = UDim2.new(1, -28, 0, 0)
+    dropdownList.Position = UDim2.new(0, 14, 0, 82)
+    dropdownList.BackgroundTransparency = 1
+    dropdownList.BorderSizePixel = 0
+    dropdownList.Visible = false
+    dropdownList.ZIndex = 4
+    dropdownList.Parent = card
+
+    local function cloneSelectedOptions()
+        local result = {}
+        for index, optionName in ipairs(selectedOptions) do
+            result[index] = optionName
+        end
+        return result
+    end
+
+    local function rebuildSelectedOptions()
+        table.clear(selectedOptions)
+        for _, optionName in ipairs(options) do
+            if selectedLookup[optionName] then
+                table.insert(selectedOptions, optionName)
+            end
+        end
+    end
+
+    local function updateDropdownText()
+        if #selectedOptions == 0 then
+            dropdownText.Text = "Selected: None"
+        elseif #selectedOptions == 1 then
+            dropdownText.Text = "Selected: " .. selectedOptions[1]
+        elseif #selectedOptions == 2 then
+            dropdownText.Text = "Selected: " .. selectedOptions[1] .. ", " .. selectedOptions[2]
+        else
+            dropdownText.Text = "Selected: " .. #selectedOptions .. " items"
+        end
+
+        dropdownArrow.Text = dropdownOpen and "^" or "v"
+    end
+
+    local function refreshDropdownCard()
+        local listHeight = dropdownOpen and getDropdownListHeight(#options) or 0
+        card.Size = UDim2.new(1, 0, 0, 84 + listHeight)
+        dropdownList.Size = UDim2.new(1, -28, 0, listHeight)
+        dropdownList.Visible = dropdownOpen
+        updateWindowHeight()
+    end
+
+    local function rebuildDropdownOptions()
+        dropdownList:ClearAllChildren()
+
+        for index, optionName in ipairs(options) do
+            local optionButton = Instance.new("TextButton")
+            optionButton.Name = "Option" .. index
+            optionButton.Size = UDim2.new(1, 0, 0, DROPDOWN_OPTION_HEIGHT)
+            optionButton.Position = UDim2.new(0, 0, 0, (index - 1) * (DROPDOWN_OPTION_HEIGHT + DROPDOWN_OPTION_GAP))
+            optionButton.BackgroundColor3 = selectedLookup[optionName] and Color3.fromRGB(67, 98, 168) or Color3.fromRGB(39, 43, 54)
+            optionButton.BorderSizePixel = 0
+            optionButton.Font = Enum.Font.Gotham
+            optionButton.Text = optionName
+            optionButton.TextColor3 = Color3.fromRGB(235, 239, 245)
+            optionButton.TextSize = 12
+            optionButton.AutoButtonColor = false
+            optionButton.ZIndex = 5
+            optionButton.Parent = dropdownList
+
+            local optionCorner = Instance.new("UICorner")
+            optionCorner.CornerRadius = UDim.new(0, 10)
+            optionCorner.Parent = optionButton
+
+            optionButton.MouseButton1Click:Connect(function()
+                selectedLookup[optionName] = not selectedLookup[optionName] or nil
+                rebuildSelectedOptions()
+                updateDropdownText()
+                rebuildDropdownOptions()
+                if callback then
+                    callback(cloneSelectedOptions())
+                end
+            end)
+        end
+
+        refreshDropdownCard()
+    end
+
+    rebuildSelectedOptions()
+    rebuildDropdownOptions()
+    updateDropdownText()
+
+    dropdownButton.MouseButton1Click:Connect(function()
+        dropdownOpen = not dropdownOpen
+        updateDropdownText()
+        refreshDropdownCard()
+    end)
+
+    return card
+end
+
 dataname = {}
 Mydata = {}
 
@@ -612,6 +764,10 @@ Section:NewToggle("Toggle", false, function(state)
             game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("GGEZ"):Destroy()
         end 
     end
+end)
+
+Section:NewMultiDropdown("Characters Multi", {"1","2","3"}, function(selectedOptions)
+    MultiCharacters = selectedOptions
 end)
 
 task.spawn(function()
