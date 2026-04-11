@@ -618,7 +618,7 @@ task.spawn(function()
 while wait() do
 if a1 then
 pcall(function()
-    if game.Players.LocalPlayer.Character.Humanoid.FloorMaterial ~= Enum.Material.Air and game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Y > 60 then
+    if game.Players.LocalPlayer.Character.Humanoid.FloorMaterial ~= Enum.Material.Air and game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Y > 28 then
         Save = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
         wait(.5)
         if game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("GGEZ") then
@@ -656,7 +656,7 @@ task.spawn(function()
 while task.wait() do
 if a1 then
 pcall(function()
-    if game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Y <= 60 then
+    if game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Y <= 28 then
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Save
         if not game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("GGEZ") then
             local Noclip = Instance.new("BodyVelocity")
