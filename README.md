@@ -757,8 +757,13 @@ Section:NewDropdown("Change Skill", Mydata, function(currentOption)
 end)
 
 game:GetService("Players").LocalPlayer.PlayerGui.Botoes.Poderes.ChildAdded:Connect(function(child)
-    if string.find(v.Name,"_") then
-        game:GetService("ReplicatedStorage"):WaitForChild("SkillEvent"):FireServer(child.TextLabel.Name)
+    if string.find(child.Name,"_") then
+        for key, v in pairs(child) do
+            if v:IsA("ImageButton") then
+                yes = v
+            end
+        end
+        game:GetService("ReplicatedStorage"):WaitForChild("SkillEvent"):FireServer(yes.Name)
     end
 end)
 
