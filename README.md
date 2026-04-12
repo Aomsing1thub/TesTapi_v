@@ -757,8 +757,8 @@ Section:NewDropdown("Change Skill", Mydata, function(currentOption)
 end)
 
 Section:NewMultiDropdown("Characters Multi", Mydata, function(selectedOptions)
+    wait(.25)
     if #selectedOptions == 1 then
-        wait(1)
         firesignal(game:GetService("Players").LocalPlayer.PlayerGui.Tranformar.Characters[selectedOptions[1]].Transform.MouseButton1Click)
     elseif #selectedOptions == 2 then
         game:GetService("Players").LocalPlayer.PlayerGui.Botoes.Direita.Visible = false
@@ -781,8 +781,6 @@ Section:NewMultiDropdown("Characters Multi", Mydata, function(selectedOptions)
             cloned.Position = target2.Position - UDim2.new(0.731, 0, 0, 0)
             cloned.TextLabel.Text = selectedOptions[1]
         end
-
-        wait(1)
         firesignal(game:GetService("Players").LocalPlayer.PlayerGui.Tranformar.Characters[selectedOptions[#selectedOptions]].Transform.MouseButton1Click)
     end
 end)
