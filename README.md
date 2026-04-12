@@ -617,16 +617,18 @@ function Section:NewMultiDropdown(name, options, callback)
     dropdownText.ZIndex = 5
     dropdownText.Parent = dropdownButton
 
-    local dropdownArrow = Instance.new("TextLabel")
-    dropdownArrow.Name = "MultiDropdownArrow"
-    dropdownArrow.Size = UDim2.new(0, 22, 1, 0)
-    dropdownArrow.Position = UDim2.new(1, -26, 0, 0)
-    dropdownArrow.BackgroundTransparency = 1
-    dropdownArrow.Font = Enum.Font.GothamBold
-    dropdownArrow.TextColor3 = Color3.fromRGB(161, 195, 255)
-    dropdownArrow.TextSize = 14
-    dropdownArrow.ZIndex = 5
-    dropdownArrow.Parent = dropdownButton
+    local dropdownClearButton = Instance.new("TextButton")
+    dropdownClearButton.Name = "MultiDropdownClearButton"
+    dropdownClearButton.Size = UDim2.new(0, 22, 1, 0)
+    dropdownClearButton.Position = UDim2.new(1, -26, 0, 0)
+    dropdownClearButton.BackgroundTransparency = 1
+    dropdownClearButton.Font = Enum.Font.GothamBold
+    dropdownClearButton.Text = "X"
+    dropdownClearButton.TextColor3 = Color3.fromRGB(255, 214, 214)
+    dropdownClearButton.TextSize = 12
+    dropdownClearButton.AutoButtonColor = false
+    dropdownClearButton.ZIndex = 6
+    dropdownClearButton.Parent = dropdownButton
 
     local dropdownList = Instance.new("Frame")
     dropdownList.Name = "MultiDropdownList"
@@ -666,7 +668,6 @@ function Section:NewMultiDropdown(name, options, callback)
             dropdownText.Text = "Selected: " .. #selectedOptions .. " items"
         end
 
-        dropdownArrow.Text = dropdownOpen and "^" or "v"
     end
 
     local function refreshDropdownCard()
@@ -726,6 +727,16 @@ function Section:NewMultiDropdown(name, options, callback)
         dropdownOpen = not dropdownOpen
         updateDropdownText()
         refreshDropdownCard()
+    end)
+
+    dropdownClearButton.MouseButton1Click:Connect(function()
+        table.clear(selectedLookup)
+        table.clear(selectedOptions)
+        updateDropdownText()
+        rebuildDropdownOptions()
+        if callback then
+            callback(cloneSelectedOptions())
+        end
     end)
 
     return card
