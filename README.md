@@ -761,8 +761,7 @@ game:GetService("Players").LocalPlayer.PlayerGui.Botoes.Poderes.ChildAdded:Conne
         child.MouseButton1Click:Connect(function()
             for key, v in pairs(child:GetChildren()) do
                 if v:IsA("TextLabel") then
-                    print("Work",v)
-                    -- game:GetService("ReplicatedStorage"):WaitForChild("SkillEvent"):FireServer(v.Name)
+                    game:GetService("ReplicatedStorage"):WaitForChild("SkillEvent"):FireServer(v.Name)
                 end
             end
         end)
@@ -825,7 +824,7 @@ Section:NewMultiDropdown("Characters Multi", Mydata, function(selectedOptions)
             cloned.Parent = target2.Parent
             cloned.Name = "2_2"
             cloned.Position = target2.Position - UDim2.new(0.731, 0, 0, 0)
-            cloned.TextLabel.Name = selectedOptions[#selectedOptions - 1]
+            cloned.TextLabel.Name = selectedOptions[#selectedOptions - 1].."2"
         end
         firesignal(game:GetService("Players").LocalPlayer.PlayerGui.Tranformar.Characters[selectedOptions[#selectedOptions]].Transform.MouseButton1Click)
     elseif #selectedOptions == 3 then
@@ -869,7 +868,7 @@ Section:NewMultiDropdown("Characters Multi", Mydata, function(selectedOptions)
             cloned.Parent = target2.Parent
             cloned.Name = "3_2"
             cloned.Position = target2.Position - UDim2.new(0, 0, 0.95, 0)
-            cloned.TextLabel.Name = selectedOptions[#selectedOptions - 1]
+            cloned.TextLabel.Name = selectedOptions[#selectedOptions - 1].."2"
             print("clone 3_2")
         end
         firesignal(game:GetService("Players").LocalPlayer.PlayerGui.Tranformar.Characters[selectedOptions[#selectedOptions]].Transform.MouseButton1Click)
@@ -894,7 +893,7 @@ Section:NewMultiDropdown("Characters Multi", Mydata, function(selectedOptions)
             cloned.Parent = target2.Parent
             cloned.Name = "4_2"
             cloned.Position = target2.Position - UDim2.new(0.731, 0, 0.95, 0)
-            cloned.TextLabel.Name = selectedOptions[#selectedOptions - 1]
+            cloned.TextLabel.Name = selectedOptions[#selectedOptions - 1].."2"
             print("clone 4_2")
         end
         firesignal(game:GetService("Players").LocalPlayer.PlayerGui.Tranformar.Characters[selectedOptions[#selectedOptions]].Transform.MouseButton1Click)
