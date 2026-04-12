@@ -757,7 +757,7 @@ Section:NewDropdown("Change Skill", Mydata, function(currentOption)
 end)
 
 Section:NewMultiDropdown("Characters Multi", Mydata, function(selectedOptions)
-    if selectedOptions > 1 then
+    if #selectedOptions > 1 then
         game:GetService("Players").LocalPlayer.PlayerGui.Botoes.Direita.Visible = false
         target = game:GetService("Players").LocalPlayer.PlayerGui.Botoes.Poderes["TrolarBot\195\163o"]
 
