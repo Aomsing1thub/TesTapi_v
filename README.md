@@ -757,9 +757,7 @@ Section:NewDropdown("Change Skill", Mydata, function(currentOption)
 end)
 
 Section:NewMultiDropdown("Characters Multi", Mydata, function(selectedOptions)
-    for key, v in pairs(selectedOptions) do
-        print(i,v)
-    end
+    firesignal(game:GetService("Players").LocalPlayer.PlayerGui.Tranformar.Characters[selectedOptions[#selectedOptions]].Transform.MouseButton1Click)
 end)
 
 
