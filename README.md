@@ -805,7 +805,7 @@ Section:NewMultiDropdown("Characters Multi", Mydata, function(selectedOptions)
         end
 
         target2 = game:GetService("Players").LocalPlayer.PlayerGui.Botoes.Poderes:FindFirstChild("TrolarBotao2")
-        
+        print(target2)
         if target2 then
             cloned = target2:Clone()
             cloned.Parent = target2.Parent
@@ -849,7 +849,7 @@ Section:NewMultiDropdown("Characters Multi", Mydata, function(selectedOptions)
         end
 
         target2 = game:GetService("Players").LocalPlayer.PlayerGui.Botoes.Poderes:FindFirstChild("TrolarBotao2")
-        
+        print(target2)
         if target2 then
             cloned = target2:Clone()
             cloned.Parent = target2.Parent
@@ -874,6 +874,7 @@ Section:NewMultiDropdown("Characters Multi", Mydata, function(selectedOptions)
 
         target2 = game:GetService("Players").LocalPlayer.PlayerGui.Botoes.Poderes:FindFirstChild("TrolarBotao2")
         
+        print(target2)
         if target2 then
             cloned = target2:Clone()
             cloned.Parent = target2.Parent
