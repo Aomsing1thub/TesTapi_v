@@ -773,8 +773,18 @@ Section:NewMultiDropdown("Characters Multi", Mydata, function(selectedOptions)
         firesignal(game:GetService("Players").LocalPlayer.PlayerGui.Tranformar.Characters[selectedOptions[1]].Transform.MouseButton1Click)
     elseif #selectedOptions == 2 then
         print("2")
+        target2_1 = game:GetService("Players").LocalPlayer.PlayerGui.Botoes.Poderes:FindFirstChild("2_1")
+        target2_2 = game:GetService("Players").LocalPlayer.PlayerGui.Botoes.Poderes:FindFirstChild("2_2")
         target3_1 = game:GetService("Players").LocalPlayer.PlayerGui.Botoes.Poderes:FindFirstChild("3_1")
         target3_2 = game:GetService("Players").LocalPlayer.PlayerGui.Botoes.Poderes:FindFirstChild("3_2")
+        if target2_1 then
+            target2_1:Destroy()
+            print("Destroy 2_1")
+        end
+        if target2_2 then
+            target2_2:Destroy()
+            print("Destroy 2_2")
+        end
         if target3_1 then
             target3_1:Destroy()
             print("Destroy 3_1")
@@ -806,8 +816,18 @@ Section:NewMultiDropdown("Characters Multi", Mydata, function(selectedOptions)
         firesignal(game:GetService("Players").LocalPlayer.PlayerGui.Tranformar.Characters[selectedOptions[#selectedOptions]].Transform.MouseButton1Click)
     elseif #selectedOptions == 3 then
         print("3")
+        target3_1 = game:GetService("Players").LocalPlayer.PlayerGui.Botoes.Poderes:FindFirstChild("3_1")
+        target3_2 = game:GetService("Players").LocalPlayer.PlayerGui.Botoes.Poderes:FindFirstChild("3_2")
         target4_1 = game:GetService("Players").LocalPlayer.PlayerGui.Botoes.Poderes:FindFirstChild("4_1")
         target4_2 = game:GetService("Players").LocalPlayer.PlayerGui.Botoes.Poderes:FindFirstChild("4_2")
+        if target3_1 then
+            target3_1:Destroy()
+            print("Destroy 3_1")
+        end
+        if target3_2 then
+            target3_2:Destroy()
+            print("Destroy 3_2")
+        end
         if target4_1 then
             target4_1:Destroy()
             print("Destroy 4_1")
